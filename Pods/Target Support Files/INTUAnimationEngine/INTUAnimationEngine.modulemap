@@ -1,0 +1,6 @@
+framework module INTUAnimationEngine {
+  umbrella header "INTUAnimationEngine-umbrella.h"
+
+  export *
+  module * { export * }
+}

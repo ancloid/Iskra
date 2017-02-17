@@ -1,0 +1,6 @@
+framework module EMString {
+  umbrella header "EMString-umbrella.h"
+
+  export *
+  module * { export * }
+}

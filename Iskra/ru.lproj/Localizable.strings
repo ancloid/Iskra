@@ -1,0 +1,37 @@
+/* 
+  Localizable.strings
+  vchat
+
+  Created by Alexey Fedotov on 17/11/2016.
+  Copyright © 2016 Ancle Apps. All rights reserved.
+*/
+
+//Some
+"onlineLabel" = "%i в сети";
+
+//Success Popup
+"continueButtonLabel" = "Продолжить знакомства";
+
+//Login Popup
+"facebookButtonLabel" = "Facebook";
+"vkButtonLabel" = "VKontakte";
+"loginPopupTitle" = "Пожалуйста авторизуйтесь";
+
+//Main Button
+"continueButtonLabel" = "Продолжить";
+"cancelButtonLabel" = "Отклонить";
+"searchButtonLabel" = "Искать";
+
+//Counter
+"connectingLabel" = "Собеседник найден,\nсоединение...";
+
+//End Popup
+"endPopupTitle" = "К сожалению, cоединение было разорвано";
+"endPopupSubTitle" = "Хотите продолжить общение\nс этим человеком?";
+
+"hintAddTitle" = "Добавление в контакты произойдет,\nесли решение взаимное";
+
+"endTimeOutPopupTitle" = "Время истекло";
+"endConnectionErrorPopupTitle" = "К сожалению, cоединение было разорвано";
+"endInterruptedByMePopupTitle" = "К сожалению, cоединение было разорвано";
+"endInterruptedByOpponentPopupTitle" = "К сожалению, cоединение было разорвано";

@@ -1,0 +1,60 @@
+
+/* Class = "UIButton"; normalTitle = "✕"; ObjectID = "1Wr-kC-EVp"; */
+"1Wr-kC-EVp.normalTitle" = "✕";
+
+/* Class = "UILabel"; text = "Ждём решения собеседника"; ObjectID = "2Ku-ap-PVb"; */
+"2Ku-ap-PVb.text" = "Ждём решения собеседника";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "5Vh-7c-3bg"; */
+"5Vh-7c-3bg.normalTitle" = "Start";
+
+/* Class = "UILabel"; text = "Искать поблизости"; ObjectID = "7Iq-OU-OBG"; */
+"7Iq-OU-OBG.text" = "Искать поблизости";
+
+/* Class = "UIButton"; normalTitle = "Правила сервиса"; ObjectID = "DA5-wX-IXA"; */
+"DA5-wX-IXA.normalTitle" = "Правила сервиса";
+
+/* Class = "UILabel"; text = "0 онлайн"; ObjectID = "Gfs-tx-d5p"; */
+"Gfs-tx-d5p.text" = "0 онлайн";
+
+/* Class = "UILabel"; text = "10 km"; ObjectID = "H0D-eb-Eqm"; */
+"H0D-eb-Eqm.text" = "10 km";
+
+/* Class = "UILabel"; text = "Username"; ObjectID = "NfH-7h-cyv"; */
+"NfH-7h-cyv.text" = "Username";
+
+/* Class = "UIButton"; normalTitle = "Фильтры"; ObjectID = "PkC-Oe-gsx"; */
+"PkC-Oe-gsx.normalTitle" = "Фильтры";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "QRx-3x-NPN"; */
+"QRx-3x-NPN.text" = "00:00";
+
+/* Class = "UIButton"; normalTitle = "Маски"; ObjectID = "Rnh-u8-u1a"; */
+"Rnh-u8-u1a.normalTitle" = "Маски";
+
+/* Class = "UILabel"; text = "Искать по возрасту"; ObjectID = "UTw-gr-ucK"; */
+"UTw-gr-ucK.text" = "Искать по возрасту";
+
+/* Class = "UIButton"; normalTitle = "Отключить подписку"; ObjectID = "YEv-w9-9ud"; */
+"YEv-w9-9ud.normalTitle" = "Отключить подписку";
+
+/* Class = "UIButton"; normalTitle = "Мои контакты"; ObjectID = "b0N-F0-Gbu"; */
+"b0N-F0-Gbu.normalTitle" = "Мои контакты";
+
+/* Class = "UIButton"; normalTitle = "✕"; ObjectID = "c5H-K2-9hU"; */
+"c5H-K2-9hU.normalTitle" = "✕";
+
+/* Class = "UILabel"; text = "Только противоположный пол"; ObjectID = "dfm-2T-vY3"; */
+"dfm-2T-vY3.text" = "Только противоположный пол";
+
+/* Class = "UILabel"; text = "Настройки поиска"; ObjectID = "eRJ-GI-zza"; */
+"eRJ-GI-zza.text" = "Настройки поиска";
+
+/* Class = "UILabel"; text = "Искать женщин"; ObjectID = "geu-Qg-6Uh"; */
+"geu-Qg-6Uh.text" = "Искать женщин";
+
+/* Class = "UILabel"; text = "0:51"; ObjectID = "uXc-Sa-PBB"; */
+"uXc-Sa-PBB.text" = "0:51";
+
+/* Class = "UILabel"; text = "Искать мужчин"; ObjectID = "yz0-o9-aaP"; */
+"yz0-o9-aaP.text" = "Искать мужчин";

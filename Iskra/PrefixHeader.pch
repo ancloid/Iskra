@@ -1,0 +1,32 @@
+//
+//  PrefixHeader.pch
+//  Iskra
+//
+//  Created by Alexey Fedotov on 17/02/2017.
+//
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#define LOG_LEVEL_DEF ddLogLevel
+#define LOG_ASYNC_ENABLED ddLogEnabled
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import "Constants.h"
+#import "FrameAccessor.h"
+
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#endif
+
+
+#define APPDELEGATE ((AppDelegate*)[[UIApplication sharedApplication] delegate])
+#define API ((ApiManager*)[ApiManager sharedController])
+#define LOGIN ((LoginManager*)[LoginManager sharedController])
+#define LOCATION ((LocationManager*)[LocationManager sharedController])
+#define DATA ((DataManager*)[DataManager sharedController])
+
+#endif /* PrefixHeader_pch */
