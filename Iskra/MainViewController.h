@@ -1,6 +1,6 @@
 //
 //  MainViewController.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 19/08/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -57,9 +57,6 @@
 @property (weak, nonatomic) IBOutlet UIView *timerView;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timerTitleLabel;
-
-//TEMP
-
 
 
 

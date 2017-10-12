@@ -1,6 +1,6 @@
 //
 //  MenuViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 02/10/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -23,12 +23,9 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 - (IBAction)closeTapped:(id)sender {
-    //[self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"mainViewController"]] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
-    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)contactsTapped:(id)sender {
@@ -37,8 +34,6 @@
 
 - (IBAction)subscribtionTapped:(id)sender {
     [self performSegueWithIdentifier:@"ShowSub" sender:self];
-    //[self performSegueWithIdentifier:@"ShowRules" sender:self];
-    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions"]];
 }
 
 - (IBAction)rulesTapped:(id)sender {

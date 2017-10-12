@@ -1,6 +1,6 @@
 //
 //  Chat.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 22/11/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.

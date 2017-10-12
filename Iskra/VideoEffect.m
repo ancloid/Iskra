@@ -1,6 +1,6 @@
 //
 //  VideoEffect.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 08/01/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.
@@ -15,7 +15,6 @@
 -(id)initWithType:(EffectType)type{
     if((self = [super init])) {
         _type = type;
-        //[self createWithType:];
     }
     return self;
 }
@@ -71,6 +70,7 @@
     return filter;
 }
 
+//used
 - (CGImageRef)getRefWithEffectFrom:(CGImageRef)image{
     GPUImageFilter * filter = [self getColorFilterFor:self.type];
     if(!filter){
@@ -83,25 +83,16 @@
     return ref;
 }
 
+//not used
 - (CIImage *)applyEffectTo:(CIImage *)image{
-   // @autoreleasepool {
     
-        GPUImageColorMatrixFilter *stillImageFilter2 = [GPUImageSepiaFilter new];
-        CGImageRef ref = [stillImageFilter2 newCGImageByFilteringCGImage:[image CGImage]];
-        CIImage *ciimage = [CIImage imageWithCGImage:ref];
-        return ciimage;
-    
-    /*
-        CIFilter *filter = [self getFilterFor:self.type];
-        if(!filter){
-            return image;
-        }
-        [filter setValue:image forKey:kCIInputImageKey];
-        image = [filter outputImage]; //[filter valueForKey:kCIOutputImageKey];
-    
+    GPUImageFilter * filter = [self getColorFilterFor:self.type];
+    if(!filter){
         return image;
-     */
-    //}
+    }
+    CGImageRef ref = [filter newCGImageByFilteringCGImage:[image CGImage]];
+    CIImage *ciimage = [CIImage imageWithCGImage:ref];
+    return ciimage;
 }
 
 @end

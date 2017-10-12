@@ -1,9 +1,9 @@
 //
-//  DEMOViewController.h
-//  RESideMenuStoryboards
+//  RootViewController.h
+//  Iskra
 //
-//  Created by Roman Efimov on 10/9/13.
-//  Copyright (c) 2013 Roman Efimov. All rights reserved.
+//  Created by Alexey Fedotov on 22/11/2016.
+//  Copyright © 2016 Ancle Apps. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

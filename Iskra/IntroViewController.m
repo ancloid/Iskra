@@ -1,6 +1,6 @@
 //
 //  IntroViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 09/11/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -9,7 +9,6 @@
 #import "IntroViewController.h"
 #import <BFPaperButton/BFPaperButton.h>
 #import <CoreLocation/CoreLocation.h>
-#import <OneSignal/OneSignal.h>
 #import "LocationManager.h"
 
 @interface IntroViewController ()
@@ -23,7 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     self.p1view = [[UIView alloc] initWithFrame:self.view.frame];
     self.p1view.backgroundColor = colorFromInteger(0xF2F2F2);
@@ -35,7 +33,6 @@
     
     BFPaperButton *btn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, self.p1view.frame.size.height - 50, self.view.bounds.size.width, 50)];
     [btn setBackgroundColor:colorFromInteger(0xFFB61C)];
-    //[btn setCornerRadius:25];
     [btn setTitle:@"Включить определение гео" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(onGeo:) forControlEvents:UIControlEventTouchUpInside];
     [self.p1view addSubview:btn];
@@ -82,41 +79,16 @@
 -(void)onGeo:(id)sender {
     self.p1view.hidden = YES;
     self.p2view.hidden = NO;
-    //TODO: add animation
     
-    //ask geo
     [LOCATION ask];
 }
 
 -(void)onPushes:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    //ask for pushes
-    [OneSignal registerForPushNotifications];
-    
-    //to check pushToken=nil if not registered
-    /*
-     [OneSignal IdsAvailable:^(NSString* userId, NSString* pushToken) {
-     NSLog(@"UserId:%@", userId);
-     if (pushToken != nil)
-     NSLog(@"pushToken:%@", pushToken);
-     }];
-     */
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C1CA3411E9FFBE300BB21F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C1CA3401E9FFBE300BB21F8 /* GoogleService-Info.plist */; };
+		6C9796AF1E77FCB80084C4F2 /* masks_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796A91E77FCB80084C4F2 /* masks_0.png */; };
+		6C9796B01E77FCB80084C4F2 /* masks_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796AA1E77FCB80084C4F2 /* masks_1.png */; };
+		6C9796B11E77FCB80084C4F2 /* masks_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796AB1E77FCB80084C4F2 /* masks_2.png */; };
+		6C9796B21E77FCB80084C4F2 /* masks_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796AC1E77FCB80084C4F2 /* masks_3.png */; };
+		6C9796B31E77FCB80084C4F2 /* masks_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796AD1E77FCB80084C4F2 /* masks_4.png */; };
+		6C9796B41E77FCB80084C4F2 /* masks_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796AE1E77FCB80084C4F2 /* masks_5.png */; };
+		6C9796B61E77FE860084C4F2 /* temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9796B51E77FE860084C4F2 /* temp.png */; };
 		6CA9A5FF1E56EED1003162E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA9A5FE1E56EED1003162E0 /* main.m */; };
 		6CA9A6081E56EED1003162E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9A6061E56EED1003162E0 /* Main.storyboard */; };
 		6CA9A60D1E56EED1003162E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9A60B1E56EED1003162E0 /* LaunchScreen.storyboard */; };
@@ -69,11 +77,23 @@
 		6CA9A6BA1E56FEFF003162E0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA9A6B91E56FEFF003162E0 /* AVFoundation.framework */; };
 		6CA9A6BC1E56FF09003162E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA9A6BB1E56FF09003162E0 /* AudioToolbox.framework */; };
 		6CA9A6BE1E56FF0F003162E0 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA9A6BD1E56FF0F003162E0 /* VideoToolbox.framework */; };
+		6CA9A6C01E57036D003162E0 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA9A6BF1E57036D003162E0 /* SpriteKit.framework */; };
+		6CA9A6C21E5703F3003162E0 /* WinEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9A6C11E5703F3003162E0 /* WinEffect.sks */; };
+		6CCC3C321E77F36C00DDFBA7 /* glasses_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCC3C301E77F36C00DDFBA7 /* glasses_3.png */; };
+		6CCC3C331E77F36C00DDFBA7 /* glasses_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCC3C311E77F36C00DDFBA7 /* glasses_4.png */; };
 		C3DCBF31FB8E56AE8A05F77B /* Pods_Iskra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EF08C66DF10252F7AB736A /* Pods_Iskra.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		40A55A341D26A88E272A1556 /* Pods-Iskra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Iskra.release.xcconfig"; path = "Pods/Target Support Files/Pods-Iskra/Pods-Iskra.release.xcconfig"; sourceTree = "<group>"; };
+		6C1CA3401E9FFBE300BB21F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6C9796A91E77FCB80084C4F2 /* masks_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_0.png; path = Images/masks_0.png; sourceTree = "<group>"; };
+		6C9796AA1E77FCB80084C4F2 /* masks_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_1.png; path = Images/masks_1.png; sourceTree = "<group>"; };
+		6C9796AB1E77FCB80084C4F2 /* masks_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_2.png; path = Images/masks_2.png; sourceTree = "<group>"; };
+		6C9796AC1E77FCB80084C4F2 /* masks_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_3.png; path = Images/masks_3.png; sourceTree = "<group>"; };
+		6C9796AD1E77FCB80084C4F2 /* masks_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_4.png; path = Images/masks_4.png; sourceTree = "<group>"; };
+		6C9796AE1E77FCB80084C4F2 /* masks_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masks_5.png; path = Images/masks_5.png; sourceTree = "<group>"; };
+		6C9796B51E77FE860084C4F2 /* temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temp.png; sourceTree = "<group>"; };
 		6CA9A5FA1E56EED1003162E0 /* Iskra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iskra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CA9A5FE1E56EED1003162E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6CA9A6071E56EED1003162E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -171,6 +191,10 @@
 		6CA9A6B91E56FEFF003162E0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6CA9A6BB1E56FF09003162E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6CA9A6BD1E56FF0F003162E0 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		6CA9A6BF1E57036D003162E0 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		6CA9A6C11E5703F3003162E0 /* WinEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WinEffect.sks; sourceTree = "<group>"; };
+		6CCC3C301E77F36C00DDFBA7 /* glasses_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glasses_3.png; sourceTree = "<group>"; };
+		6CCC3C311E77F36C00DDFBA7 /* glasses_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glasses_4.png; sourceTree = "<group>"; };
 		D5B3CC8EB4AD0848EF0706E8 /* Pods-Iskra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Iskra.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Iskra/Pods-Iskra.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EF08C66DF10252F7AB736A /* Pods_Iskra.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Iskra.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -180,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CA9A6C01E57036D003162E0 /* SpriteKit.framework in Frameworks */,
 				6CA9A6BE1E56FF0F003162E0 /* VideoToolbox.framework in Frameworks */,
 				6CA9A6BC1E56FF09003162E0 /* AudioToolbox.framework in Frameworks */,
 				6CA9A6BA1E56FEFF003162E0 /* AVFoundation.framework in Frameworks */,
@@ -199,6 +224,7 @@
 		38484F1DB8630C3560B3854D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6CA9A6BF1E57036D003162E0 /* SpriteKit.framework */,
 				6CA9A6BD1E56FF0F003162E0 /* VideoToolbox.framework */,
 				6CA9A6BB1E56FF09003162E0 /* AudioToolbox.framework */,
 				6CA9A6B91E56FEFF003162E0 /* AVFoundation.framework */,
@@ -209,6 +235,25 @@
 				F4EF08C66DF10252F7AB736A /* Pods_Iskra.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6C9796A81E77F94A0084C4F2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6C9796B51E77FE860084C4F2 /* temp.png */,
+				6C9796A91E77FCB80084C4F2 /* masks_0.png */,
+				6C9796AA1E77FCB80084C4F2 /* masks_1.png */,
+				6C9796AB1E77FCB80084C4F2 /* masks_2.png */,
+				6C9796AC1E77FCB80084C4F2 /* masks_3.png */,
+				6C9796AD1E77FCB80084C4F2 /* masks_4.png */,
+				6C9796AE1E77FCB80084C4F2 /* masks_5.png */,
+				6CA9A6861E56F61B003162E0 /* glasses_0.png */,
+				6CA9A6871E56F61B003162E0 /* glasses_1.png */,
+				6CA9A6881E56F61B003162E0 /* glasses_2.png */,
+				6CCC3C301E77F36C00DDFBA7 /* glasses_3.png */,
+				6CCC3C311E77F36C00DDFBA7 /* glasses_4.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		6CA9A5F11E56EED1003162E0 = {
@@ -232,13 +277,12 @@
 		6CA9A5FC1E56EED1003162E0 /* Iskra */ = {
 			isa = PBXGroup;
 			children = (
-				6CA9A6A31E56F8D3003162E0 /* Iskra.entitlements */,
+				6CA9A6141E56F1ED003162E0 /* AppDelegate.h */,
+				6CA9A6151E56F1ED003162E0 /* AppDelegate.m */,
 				6CA9A62A1E56F26F003162E0 /* Helpers */,
 				6CA9A6701E56F476003162E0 /* Popups */,
 				6CA9A67E1E56F51D003162E0 /* Models */,
 				6CA9A6171E56F232003162E0 /* Managers */,
-				6CA9A6141E56F1ED003162E0 /* AppDelegate.h */,
-				6CA9A6151E56F1ED003162E0 /* AppDelegate.m */,
 				6CA9A64C1E56F356003162E0 /* Controllers */,
 				6CA9A5FD1E56EED1003162E0 /* Supporting Files */,
 			);
@@ -248,6 +292,8 @@
 		6CA9A5FD1E56EED1003162E0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6CA9A6A31E56F8D3003162E0 /* Iskra.entitlements */,
+				6CA9A6C11E5703F3003162E0 /* WinEffect.sks */,
 				6CA9A6AF1E56FE62003162E0 /* AgoraRtcEngineKit.framework */,
 				6CA9A6A81E56FA54003162E0 /* videoprp.framework */,
 				6CA9A6A21E56F82F003162E0 /* PrefixHeader.pch */,
@@ -256,12 +302,11 @@
 				6CA9A6061E56EED1003162E0 /* Main.storyboard */,
 				6CA9A60B1E56EED1003162E0 /* LaunchScreen.storyboard */,
 				6CA9A68C1E56F62B003162E0 /* Fonts */,
-				6CA9A6861E56F61B003162E0 /* glasses_0.png */,
-				6CA9A6871E56F61B003162E0 /* glasses_1.png */,
-				6CA9A6881E56F61B003162E0 /* glasses_2.png */,
+				6C9796A81E77F94A0084C4F2 /* Images */,
 				6CA9A6321E56F2D5003162E0 /* Assets.xcassets */,
-				6CA9A60E1E56EED1003162E0 /* Info.plist */,
 				6CA9A6311E56F2A2003162E0 /* AppleIncRootCertificate.cer */,
+				6C1CA3401E9FFBE300BB21F8 /* GoogleService-Info.plist */,
+				6CA9A60E1E56EED1003162E0 /* Info.plist */,
 				6CA9A5FE1E56EED1003162E0 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -304,10 +349,10 @@
 			isa = PBXGroup;
 			children = (
 				6CA9A6821E56F590003162E0 /* Menu */,
-				6CA9A6381E56F351003162E0 /* IntroViewController.h */,
-				6CA9A6391E56F351003162E0 /* IntroViewController.m */,
 				6CA9A63A1E56F351003162E0 /* MainViewController.h */,
 				6CA9A63B1E56F351003162E0 /* MainViewController.m */,
+				6CA9A6381E56F351003162E0 /* IntroViewController.h */,
+				6CA9A6391E56F351003162E0 /* IntroViewController.m */,
 				6CA9A6361E56F351003162E0 /* FiltersViewController.h */,
 				6CA9A6371E56F351003162E0 /* FiltersViewController.m */,
 				6CA9A63E1E56F351003162E0 /* RegisterViewController.h */,
@@ -459,7 +504,7 @@
 		6CA9A5F21E56EED1003162E0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					6CA9A5F91E56EED1003162E0 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -500,25 +545,36 @@
 			files = (
 				6CA9A6601E56F376003162E0 /* Main.strings in Resources */,
 				6CA9A68A1E56F61B003162E0 /* glasses_1.png in Resources */,
+				6C9796AF1E77FCB80084C4F2 /* masks_0.png in Resources */,
 				6CA9A65C1E56F376003162E0 /* Localizable.strings in Resources */,
 				6CA9A68B1E56F61B003162E0 /* glasses_2.png in Resources */,
 				6CA9A6981E56F62B003162E0 /* GothamProBlackItalic.ttf in Resources */,
 				6CA9A60D1E56EED1003162E0 /* LaunchScreen.storyboard in Resources */,
 				6CA9A6331E56F2D5003162E0 /* Assets.xcassets in Resources */,
+				6C1CA3411E9FFBE300BB21F8 /* GoogleService-Info.plist in Resources */,
 				6CA9A69C1E56F62B003162E0 /* GothamProLight.ttf in Resources */,
 				6CA9A65D1E56F376003162E0 /* Main.strings in Resources */,
+				6C9796B01E77FCB80084C4F2 /* masks_1.png in Resources */,
 				6CA9A6891E56F61B003162E0 /* glasses_0.png in Resources */,
 				6CA9A69D1E56F62B003162E0 /* GothamProLightItalic.ttf in Resources */,
 				6CA9A65E1E56F376003162E0 /* LaunchScreen.strings in Resources */,
+				6CCC3C331E77F36C00DDFBA7 /* glasses_4.png in Resources */,
+				6CCC3C321E77F36C00DDFBA7 /* glasses_3.png in Resources */,
 				6CA9A65F1E56F376003162E0 /* Localizable.strings in Resources */,
+				6C9796B61E77FE860084C4F2 /* temp.png in Resources */,
 				6CA9A69E1E56F62B003162E0 /* GothamProMedium.ttf in Resources */,
+				6C9796B21E77FCB80084C4F2 /* masks_3.png in Resources */,
 				6CA9A69A1E56F62B003162E0 /* GothamProBoldItalic.ttf in Resources */,
 				6CA9A6A01E56F62B003162E0 /* GothamProRegular.ttf in Resources */,
+				6C9796B41E77FCB80084C4F2 /* masks_5.png in Resources */,
 				6CA9A6991E56F62B003162E0 /* GothamProBold.ttf in Resources */,
+				6CA9A6C21E5703F3003162E0 /* WinEffect.sks in Resources */,
+				6C9796B11E77FCB80084C4F2 /* masks_2.png in Resources */,
 				6CA9A69B1E56F62B003162E0 /* GothamProItalic.ttf in Resources */,
 				6CA9A6081E56EED1003162E0 /* Main.storyboard in Resources */,
 				6CA9A6971E56F62B003162E0 /* GothamProBlack.ttf in Resources */,
 				6CA9A65B1E56F376003162E0 /* LaunchScreen.strings in Resources */,
+				6C9796B31E77FCB80084C4F2 /* masks_4.png in Resources */,
 				6CA9A69F1E56F62B003162E0 /* GothamProMediumItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,9 +588,52 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Iskra/Pods-Iskra-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BFPaperButton/BFPaperButton.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/EMString/EMString.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FrameAccessor/FrameAccessor.framework",
+				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
+				"${BUILT_PRODUCTS_DIR}/INTUAnimationEngine/INTUAnimationEngine.framework",
+				"${BUILT_PRODUCTS_DIR}/INTULocationManager/INTULocationManager.framework",
+				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
+				"${BUILT_PRODUCTS_DIR}/JTMaterialSwitch/JTMaterialSwitch.framework",
+				"${BUILT_PRODUCTS_DIR}/MZTimerLabel/MZTimerLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
+				"${BUILT_PRODUCTS_DIR}/RESideMenu/RESideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/RMStore/RMStore.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/VK-ios-sdk/VK_ios_sdk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BFPaperButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EMString.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FrameAccessor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/INTUAnimationEngine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/INTULocationManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTMaterialSwitch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZTimerLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RESideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VK_ios_sdk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -547,13 +646,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Iskra-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9301DA149CB3C8D56A4FC80 /* [CP] Copy Pods Resources */ = {
@@ -686,12 +788,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -699,7 +804,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -734,12 +843,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -747,7 +859,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

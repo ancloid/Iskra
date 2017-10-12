@@ -1,19 +1,12 @@
 //
 //  ApiManager.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 07/10/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
 //
 
 #import "ApiManager.h"
-
-
-@interface ApiManager (){
-    
-}
-
-@end
 
 @implementation ApiManager
 
@@ -30,7 +23,9 @@
 -(id)init{
     if((self = [super init])) {
         NSLog(@"API INIT");
-        self.socket = [[SocketIOClient alloc] initWithSocketURL:[[NSURL alloc] initWithString:@"http://h.xffa.net:6680"] config:@{@"log": @YES, @"forcePolling": @YES}];
+        
+        self.socket = [[SocketIOClient alloc] initWithSocketURL:[[NSURL alloc] initWithString:@"http://138.201.191.91:6680"] config:@{@"log": @YES, @"forcePolling": @YES}];
+        
         self.socket.reconnectWait = 1;
         [self initEvents];
     }

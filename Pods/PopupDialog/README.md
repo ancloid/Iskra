@@ -16,9 +16,10 @@
 
 Popup Dialog is a simple, customizable popup dialog written in Swift.
 
-<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog01.gif?raw=true" width="250">
-<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog02.gif?raw=true" width="250">
-<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog03.gif?raw=true" width="250">
+<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog01.gif?raw=true" width="210">
+<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog02.gif?raw=true" width="210">
+<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialog03.gif?raw=true" width="210">
+<img src="https://github.com/Orderella/PopupDialog/blob/master/Assets/PopupDialogDark01.png?raw=true" width="210">
 
 ## Features
 
@@ -186,7 +187,7 @@ If you are using the default dialog, you can change selected properties at runti
 let popup = PopupDialog(title: title, message: message, image: image)
 
 // Present dialog
-self.presentViewController(popup, animated: true, completion: nil)
+self.present(popup, animated: true, completion: nil)
 
 // Get the default view controller and cast it
 // Unfortunately, casting is necessary to support Objective-C
@@ -295,12 +296,25 @@ The following is an example of a *Dark Mode* theme. You can find this in the Exa
 ```swift
 // Customize dialog appearance
 let pv = PopupDialogDefaultView.appearance()
-pv.backgroundColor      = UIColor(red:0.23, green:0.23, blue:0.27, alpha:1.00)
-pv.titleFont            = UIFont(name: "HelveticaNeue-Light", size: 16)!
-pv.titleColor           = UIColor.white
-pv.messageFont          = UIFont(name: "HelveticaNeue", size: 14)!
-pv.messageColor         = UIColor(white: 0.8, alpha: 1)
-pv.cornerRadius         = 2
+pv.titleFont    = UIFont(name: "HelveticaNeue-Light", size: 16)!
+pv.titleColor   = UIColor.white
+pv.messageFont  = UIFont(name: "HelveticaNeue", size: 14)!
+pv.messageColor = UIColor(white: 0.8, alpha: 1)
+
+// Customize the container view appearance
+let pcv = PopupDialogContainerView.appearance()
+pcv.backgroundColor = UIColor(red:0.23, green:0.23, blue:0.27, alpha:1.00)
+pcv.cornerRadius    = 2
+pcv.shadowEnabled   = true
+pcv.shadowColor     = UIColor.black
+
+// Customize overlay appearance
+let ov = PopupDialogOverlayView.appearance()
+ov.blurEnabled = true
+ov.blurRadius  = 30
+ov.liveBlur    = true
+ov.opacity     = 0.7
+ov.color       = UIColor.black
 
 // Customize default button appearance
 let db = DefaultButton.appearance()
@@ -386,7 +400,8 @@ Minimum requirement is iOS 8.0. This dialog was written with Swift 3, for 2.2 co
 
 # Changelog
 
-* **0.5.3** Fixed memory leak with custom view controllers
+* **0.5.4** Fixed bug where blur view would reveal hidden layer<br>Improved view controller lifecycle handling<br>Scroll views can now be used with gesture dismissal
+* **0.5.3** Fixed memory leak with custom view controllers<br>Added UI automation & snapshot tests
 * **0.5.2** Fixed image scaling for default view
 * **0.5.1** Introduced custom button height parameter<br>Reintroduced iOS8 compatibility
 * **0.5.0** Swift 3 compatibility / removed iOS8

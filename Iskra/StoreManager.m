@@ -1,12 +1,12 @@
 //
 //  StoreManager.m
-//  KidBookGold
+//  Iskra
 //
-//  Created by Alexey Fedotov on 24/07/16.
-//  Copyright © 2016 Blue MArlin Technologies Corp. All rights reserved.
+//  Created by Alexey Fedotov on 08/12/2016.
+//  Copyright © 2016 Ancle Apps. All rights reserved.
 //
 
-//#import "Amplitude.h"
+
 #import "StoreManager.h"
 #import "RMStore.h"
 #import "RMStoreKeychainPersistence.h"
@@ -46,9 +46,11 @@
 }
 
 -(void)start{
+    
     Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     [reach startNotifier];
+     
 }
 
 //TODO: make one reachebiliyty
@@ -83,23 +85,15 @@
     else
     {
         NSLog(@"Internet is Down");
-        
     }
 }
 
 -(void)getProducts{
-    NSLog(@"getProducts");
     
     self.productsLoaded = true;
     
     NSSet *products = [NSSet setWithArray:PRODUCTS_ARRAY];
     [[RMStore defaultStore] requestProducts:products success:^(NSArray *products, NSArray *invalidProductIdentifiers) {
-        NSLog(@"Products loaded %@", products);
-        
-        for (SKProduct *product in products) {
-            NSLog(@"Product: %@ %@ %@", product.productIdentifier, product.price, product.priceLocale.localeIdentifier);
-        }
-        
         self.productsLoaded = true;
         
     } failure:^(NSError *error) {
@@ -118,8 +112,6 @@
 -(NSString *)getPriceOf:(SKPaymentTransaction *)transaction{
     return [self getPriceOfProduct:transaction.payment.productIdentifier];
 }
-
-
 
 //wont ask password, can call from reachability or from refresh receipt or from checking
 -(BOOL)checkSubscription{
@@ -199,23 +191,19 @@
 
 -(void)buyProduct:(NSString *)productId withBlock:(StoreBlock)block{
     [[RMStore defaultStore] addPayment:productId success:^(SKPaymentTransaction *transaction) {
-        NSLog(@"Product purchased");
         
         [[[RMStore defaultStore] receiptVerificator] verifyTransaction:transaction success:^{
-            NSLog(@"verifyTransaction OK");
             
             if (block != nil) {
                 block(transaction, nil);
             }
         } failure:^(NSError *error) {
-            NSLog(@"verifyTransaction ERROR %@", error.description);
             if (block != nil) {
                 block(nil, error);
             }
         }];
         
     } failure:^(SKPaymentTransaction *transaction, NSError *error) {
-        NSLog(@"Something went wrong %@", error.description);
         if (block != nil) {
             block(nil, error);
         }
@@ -224,12 +212,10 @@
 
 -(void)restorePurchases:(RestoreBlock)block{
     [[RMStore defaultStore] restoreTransactionsOnSuccess:^(NSArray *transactions){
-        NSLog(@"Transactions restored");
         if (block != nil) {
             block(transactions, nil);
         }
     } failure:^(NSError *error) {
-        NSLog(@"Something went wrong  %@", error.description);
         if (block != nil) {
             block(nil, error);
         }
@@ -283,14 +269,12 @@
 -(void)refreshReceipe:(ValidBlock)block{
     
     [[RMStore defaultStore] refreshReceiptOnSuccess:^{
-        NSLog(@"Receipt refreshed");
         self.receipeRefreshed = true;
         if (block != nil) {
             block([self checkSubscription], NO);
         }
     }failure:^(NSError *error) {
         self.receipeRefreshed = false;
-        NSLog(@"RMStore Something went wrong: %@", error.description);
         if (block != nil) {
             block(NO, YES);
         }

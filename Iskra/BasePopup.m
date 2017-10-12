@@ -139,9 +139,6 @@
     button.backgroundColor = color;
     button.cornerRadius = kButtonCorner;
     
-    //[button setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 10.0, 0.0, 0.0)];
-    //[button setContentEdgeInsets:UIEdgeInsetsMake(0.0, 25.0, 0.0, 0.0)];
-    
     return button;
 }
 

@@ -1,6 +1,6 @@
 //
 //  LocationManager.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 08/12/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -56,7 +56,6 @@
 
 -(void)ask{
     if([CLLocationManager locationServicesEnabled]){
-        //self.locationManager = [CLLocationManager new];
         if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
             [self.locationManager requestWhenInUseAuthorization];
         }

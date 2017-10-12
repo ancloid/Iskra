@@ -1,6 +1,6 @@
 //
 //  Constants.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 28/09/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.

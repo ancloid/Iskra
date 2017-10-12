@@ -1,6 +1,6 @@
 //
 //  DebugManager.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 16/02/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.
@@ -28,7 +28,6 @@
 }
 
 -(void)addDebug:(NSString *)value{
-    //FIRCrashNSLog(@"%@", value);
     self.debugText = [NSString stringWithFormat:@"%@\n%@",value,self.debugText];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"debugNotification" object:nil userInfo:@{@"text":value}];
 }

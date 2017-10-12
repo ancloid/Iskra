@@ -1,6 +1,6 @@
 //
 //  DebugManager.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 16/02/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.
@@ -12,8 +12,6 @@
 + (DebugManager *)sharedInstance;
 
 @property (nonatomic, strong) NSString *debugText;
-
-
 
 - (void)addDebug:(NSString *)value;
 

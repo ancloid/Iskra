@@ -1,6 +1,6 @@
 //
 //  LoginManager.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 07/10/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -87,7 +87,6 @@
 
 //VKSDKDELEGATE
 - (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result{
-    NSLog(@"VK vkSdkAccessAuthorizationFinishedWithResult");
     if (result.token) {
         _isVkSigned = true;
         NSString *email = @"";
@@ -101,25 +100,21 @@
 }
 
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken{
-    NSLog(@"VK vkSdkTokenHasExpired");
     [self loginTo:Vkontakte withBlock:nil];
 }
 
 - (void)vkSdkUserAuthorizationFailed{
-    NSLog(@"VK vkSdkUserAuthorizationFailed");
     [self endWith:false andData:nil];
 }
 
 //VKSdkUIDelegate
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError{
-    NSLog(@"VK vkSdkNeedCaptchaEnter");
     VKCaptchaViewController *vc = [VKCaptchaViewController captchaControllerWithError:captchaError];
     [vc presentIn:root];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller{
-    NSLog(@"VK vkSdkShouldPresentViewController");
     [root presentViewController:controller animated:YES completion:nil];
 }
 
@@ -132,11 +127,7 @@
 }
 
 -(void)vkCheckProfile{
-    //if([HOLDER.user.sid isEqualToString:@""]){
-        [self getVkUser];
-    //}else{
-    //    [self endWith:true];
-    //}
+    [self getVkUser];
 }
 
 -(void)getVkUser{
@@ -180,11 +171,7 @@
 }
 
 -(void)fbCheckProfile {
-    //if([HOLDER.user.sid isEqualToString:@""]){ //if already got
-        [self getFbUser];
-    //}else{
-    //    [self endWith:true];
-    //}
+    [self getFbUser];
 }
 
 -(void)fbLogout {
@@ -197,8 +184,6 @@
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:@{ @"fields" : @"id,first_name,last_name,birthday,gender,link"}]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             NSLog(@"getFbUser: %@", result);
-             
              [self endWith:true andData:result];
          }else{
              [self showError:error.description];
@@ -218,7 +203,6 @@
 }
 
 -(void)showError:(NSString *)error{
-    NSLog(@"ERROR %@", error.description);
     NSDictionary *userInfo = @{@"text" : error};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowError" object:self userInfo:userInfo];
 }

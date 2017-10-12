@@ -1,6 +1,6 @@
 //
 //  MaskEffect.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 05/02/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.
@@ -31,6 +31,12 @@
             break;
         case ThirdMask:
             name = @"glasses_2";
+            break;
+        case FourthMask:
+            name = @"glasses_3";
+            break;
+        case FifthMask:
+            name = @"glasses_4";
             break;
     }
     
@@ -82,15 +88,6 @@
     }
     
     return image;
-    
-    /*
-    NSDictionary *imageOptions = nil;
-    UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
-    int exifOrientation = 6;
-     
-     
-     
-    */
 }
 
 @end

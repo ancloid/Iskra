@@ -1,6 +1,6 @@
 //
 //  RegisterViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 22/11/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -121,10 +121,7 @@
 - (void)onDatePickerValueChanged:(UIDatePicker *)datePicker
 {
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:datePicker.date];
-    //NSDateComponents *nowComponents = [[NSCalendar currentCalendar] components: NSCalendarUnitYear fromDate:[NSDate date]];
-    //NSInteger nowYear = [nowComponents year];
     NSInteger year = [components year];
-    //NSInteger bday = nowYear - year;
     
     self.user.bday = [NSNumber numberWithInteger:year];
     [self.dateButton setTitle:[NSString stringWithFormat:@"%@%@",@"Год рождения: ",self.user.bday] forState:UIControlStateNormal];

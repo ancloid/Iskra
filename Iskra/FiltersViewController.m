@@ -1,6 +1,6 @@
 //
 //  FiltersViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 02/10/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -90,8 +90,6 @@
     [DataManager saveFilters:settings];
     
     [self.sideMenuViewController hideMenuViewController];
-    
-    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)geoChanged:(id)sender {
@@ -133,8 +131,6 @@
                                                  completion:nil];
     
     DefaultButton *v1 = [[DefaultButton alloc] initWithTitle:@"Настройки" height:kPopupButtonHeight dismissOnTap:YES action:^{
-        //to prevent double presentViewController crash
-        //[self dismissPopup];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         });

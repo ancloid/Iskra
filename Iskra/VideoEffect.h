@@ -1,6 +1,6 @@
 //
 //  VideoEffect.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 08/01/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.

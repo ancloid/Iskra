@@ -1,6 +1,6 @@
 //
 //  RulesViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 21/11/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -53,15 +53,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

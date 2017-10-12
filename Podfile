@@ -1,24 +1,17 @@
 platform :ios, '9.0'
 source 'https://github.com/CocoaPods/Specs.git'
-#source 'https://github.com/twilio/cocoapod-specs'
 
 use_frameworks!
 
 
 
 target 'Iskra' do
-#pod 'AFNetworking', '~> 3.0'
-#pod 'HTProgressHUD', '~> 0.2'
 
 pod 'Reachability', '~> 3.2'
-#pod 'SBJson', '~> 4.0.1'
-#pod 'SDWebImage', '~> 3.8'
 
 pod 'OpenSSL-Universal'
 
 pod 'RMStore', '~> 0.7'
-#pod 'RMStore/AppReceiptVerificator'
-#pod 'RMStore/TransactionReceiptVerificator'
 pod 'RMStore/KeychainPersistence'
 pod 'RMStore/NSUserDefaultsPersistence'
 
@@ -26,11 +19,7 @@ pod 'RMStore/NSUserDefaultsPersistence'
 pod 'VK-ios-sdk'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
-pod 'OneSignal'
-pod 'Socket.IO-Client-Swift', '~> 8.1.0'
-#pod 'TwilioVideo', '1.0.0-beta4'
-#pod 'QuickBlox'
-#pod 'Quickblox-WebRTC', '~> 2.3.1'
+pod 'Socket.IO-Client-Swift', '~> 8.3.3'
 
 #stuff
 pod 'INTUAnimationEngine'
@@ -50,12 +39,6 @@ pod 'BFPaperButton'
 pod 'SVProgressHUD'
 
 pod 'GPUImage'
-
-#pod 'Amplitude-iOS', '~> 3.8.0'
-#pod 'Google/Analytics'
-#pod 'Firebase/Messaging'
-
-#pod 'IAPHelper'
 
 
 end

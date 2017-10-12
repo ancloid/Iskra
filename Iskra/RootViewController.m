@@ -1,9 +1,9 @@
 //
-//  DEMOViewController.m
-//  RESideMenuStoryboards
+//  RootViewController.m
+//  Iskra
 //
-//  Created by Roman Efimov on 10/9/13.
-//  Copyright (c) 2013 Roman Efimov. All rights reserved.
+//  Created by Alexey Fedotov on 22/11/2016.
+//  Copyright © 2016 Ancle Apps. All rights reserved.
 //
 
 #import "RootViewController.h"
@@ -29,9 +29,7 @@
     self.panGestureEnabled = NO;
     self.parallaxEnabled = NO;
     
-    //self.panMinimumOpenThreshold = 10;
     self.contentViewInPortraitOffsetCenterX = [UIScreen mainScreen].bounds.size.width/2 - 65;
-    //self.interactivePopGestureRecognizerEnabled = YES;
     
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentViewController"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"leftMenuViewController"];

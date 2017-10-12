@@ -8,6 +8,7 @@
 build/
 DerivedData/
 Output/
+Mats/
 
 ## Various settings
 *.pbxuser

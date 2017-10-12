@@ -1,6 +1,6 @@
 //
 //  ContactsViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 21/11/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.

@@ -12,7 +12,6 @@
     BFPaperButton *emailButton;
     BFPaperButton *fbButton;
     BFPaperButton *vkButton;
-    //BFPaperButton *okButton;
     
 }
 

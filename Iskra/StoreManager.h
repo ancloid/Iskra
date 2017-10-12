@@ -1,11 +1,10 @@
 //
 //  StoreManager.h
-//  KidBookGold
+//  Iskra
 //
-//  Created by Alexey Fedotov on 24/07/16.
-//  Copyright © 2016 Blue MArlin Technologies Corp. All rights reserved.
+//  Created by Alexey Fedotov on 08/12/2016.
+//  Copyright © 2016 Ancle Apps. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 @class SKPaymentTransaction;
 
@@ -27,8 +26,6 @@ typedef NS_ENUM(NSInteger, StoreStatus) {
 @property (nonatomic, getter=isProductsLoaded) BOOL productsLoaded;
 @property (nonatomic, getter=isSubsriptionValid) BOOL subsriptionValid;
 @property (nonatomic, getter=isSubscriptionChecked) BOOL subscriptionChecked;
-
-//@property (nonatomic, readonly) NSMutableArray *productPrices;
 
 @property (nonatomic) StoreStatus status;
 

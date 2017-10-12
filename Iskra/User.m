@@ -1,6 +1,6 @@
 //
 //  User.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 07/10/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -12,12 +12,6 @@
 @implementation User
 
 -(void)createWithData:(NSArray *)data{
-    
-    //actually it's array after keychain storing
-    
-    /*
-     [{"id":"fb_10209619622944689","name":"Alexey","male":true,"year":1980,"url":"https://www.facebook.com/app_scoped_user_id/10209619622944689/"}]]
-     */
     
     self.uid =  [NSString stringWithFormat:@"%@", [data valueForKey:@"id"]];
     self.name = [NSString stringWithFormat:@"%@", [data valueForKey:@"name"]];
@@ -69,8 +63,6 @@
         
         //The gender selected by this person, male or female. This value will be omitted if the gender is set to a custom value
         
-       NSLog(@"----> %@", data);
-        
         _uid = [NSString stringWithFormat:@"%@_%@",Facebook,[data objectForKey:@"id"]];
         _name = [data objectForKey:@"first_name"];
         
@@ -100,17 +92,14 @@
         
     }
     
-    //for test
-    //_uid =  [NSString stringWithFormat:@"test_%@", [Utils randomStringWithLength:10]];
-    
 //make fake for simulator
 #if (TARGET_OS_SIMULATOR)
     
     _uid =  [NSString stringWithFormat:@"test_%@", [Utils randomStringWithLength:10]];
     _name = @"АFakeUser";
     //to check registration
-    _male = nil;//[NSNumber numberWithInt:0];
-    _bday = nil;//[NSNumber numberWithInt:0];
+    _male = nil;
+    _bday = nil;
     _link = @"http://ancle.ru";
     
 #endif

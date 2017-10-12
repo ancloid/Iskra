@@ -1,6 +1,6 @@
 //
 //  SubViewController.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 08/12/2016.
 //  Copyright © 2016 Ancle Apps. All rights reserved.

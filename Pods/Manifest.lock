@@ -6,18 +6,16 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - CocoaLumberjack (3.0.0):
-    - CocoaLumberjack/Default (= 3.0.0)
-    - CocoaLumberjack/Extensions (= 3.0.0)
-  - CocoaLumberjack/Core (3.0.0)
-  - CocoaLumberjack/Default (3.0.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (3.0.0):
+  - CocoaLumberjack (3.1.0):
+    - CocoaLumberjack/Default (= 3.1.0)
+    - CocoaLumberjack/Extensions (= 3.1.0)
+  - CocoaLumberjack/Default (3.1.0)
+  - CocoaLumberjack/Extensions (3.1.0):
     - CocoaLumberjack/Default
   - EMString (0.3.0)
-  - FBSDKCoreKit (4.19.0):
+  - FBSDKCoreKit (4.21.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.19.0):
+  - FBSDKLoginKit (4.21.0):
     - FBSDKCoreKit
   - FrameAccessor (2.0)
   - GPUImage (0.1.7)
@@ -28,9 +26,8 @@ PODS:
   - JDStatusBarNotification (1.5.5)
   - JTMaterialSwitch (1.1)
   - MZTimerLabel (0.5.4)
-  - OneSignal (2.3.5)
   - OpenSSL-Universal (1.0.1.20)
-  - PopupDialog (0.5.3)
+  - PopupDialog (0.5.4)
   - Reachability (3.2)
   - RESideMenu (4.0.7)
   - RMStore (0.7.1):
@@ -40,7 +37,7 @@ PODS:
     - RMStore/Core
   - RMStore/NSUserDefaultsPersistence (0.7.1):
     - RMStore/Core
-  - Socket.IO-Client-Swift (8.1.2)
+  - Socket.IO-Client-Swift (8.3.3)
   - SVProgressHUD (2.1.2)
   - TTRangeSlider (1.0.5)
   - VK-ios-sdk (1.4.6)
@@ -58,7 +55,6 @@ DEPENDENCIES:
   - JDStatusBarNotification
   - JTMaterialSwitch
   - MZTimerLabel
-  - OneSignal
   - OpenSSL-Universal
   - PopupDialog (~> 0.5)
   - Reachability (~> 3.2)
@@ -66,7 +62,7 @@ DEPENDENCIES:
   - RMStore (~> 0.7)
   - RMStore/KeychainPersistence
   - RMStore/NSUserDefaultsPersistence
-  - Socket.IO-Client-Swift (~> 8.1.0)
+  - Socket.IO-Client-Swift (~> 8.3.3)
   - SVProgressHUD
   - TTRangeSlider
   - VK-ios-sdk
@@ -74,10 +70,10 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   BFPaperButton: c76835e789669f64d600dc68934cc60fbb550bb9
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
+  CocoaLumberjack: 8311463ddf9ee86a06ef92a071dd656c89244500
   EMString: 612632d8224e86dd31e5743ec27ee28ea6faeae4
-  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
-  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
+  FBSDKCoreKit: 8a372ab194b5c7c26355c1920ef52dbeb44bc222
+  FBSDKLoginKit: a1a5f4b4ac445823a020fbeeaf5f03714a67ff9c
   FrameAccessor: 443a13e58e23a10ff22180da0897b28c3f6abf66
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   INTUAnimationEngine: 3a7d63738cd51af573d16848a771feedea7cc9f2
@@ -85,17 +81,16 @@ SPEC CHECKSUMS:
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   MZTimerLabel: cd9bfb9304540ef2a9e163384fca9c978f0dbf83
-  OneSignal: 4cb42948ebc141bd5deb54d3fda25105db94f6d4
   OpenSSL-Universal: 71f2c4b2ae758e2218090f905e95ca0ac5c01be7
-  PopupDialog: 533dd564f8781633375505b9fbd406f8f146ccc9
+  PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
-  Socket.IO-Client-Swift: 542d82e6708f9901b3f6c1d134fb60fa0d09d4d1
+  Socket.IO-Client-Swift: a2faffdbde89c63aebc5d631041530c1068b02b8
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
   VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
 
-PODFILE CHECKSUM: 78d342ee032ef7435e0d9611cac6f632cd67694f
+PODFILE CHECKSUM: 4504cb6225f939c4f94d26d25920b1afad18fb01
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.3.1

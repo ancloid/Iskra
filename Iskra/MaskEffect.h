@@ -1,6 +1,6 @@
 //
 //  MaskEffect.h
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 05/02/2017.
 //  Copyright © 2017 Ancle Apps. All rights reserved.
@@ -12,7 +12,9 @@ typedef NS_ENUM(NSInteger, MaskType) {
     NoMask,
     FirstMask,
     SecondMask,
-    ThirdMask
+    ThirdMask,
+    FourthMask,
+    FifthMask
 };
 
 

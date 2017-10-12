@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 19/08/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
@@ -9,11 +9,11 @@
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 @import VK_ios_sdk;
-#import <OneSignal/OneSignal.h>
 #import "StoreManager.h"
 #import "RMStore.h"
 #import "RMStoreKeychainPersistence.h"
 #import "RMStoreAppReceiptVerificator.h"
+#import "DataManager.h"
 
 @interface AppDelegate () {
     RMStoreAppReceiptVerificator *_receiptVerifier;
@@ -30,12 +30,6 @@
     //FACEBOOK
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
-    //ONE SIGNAL
-   [OneSignal initWithLaunchOptions:launchOptions appId:@"8987a661-4036-412d-9606-e4c388a61a77" handleNotificationReceived:^(OSNotification *notification) {
-       NSLog(@"Received Notification - %@", notification.payload.notificationID);
-   } handleNotificationAction:^(OSNotificationOpenedResult *result) {
-        // This block gets called when the user reacts to a notification received
-   } settings:@{kOSSettingsKeyInFocusDisplayOption : @(OSNotificationDisplayTypeInAppAlert), kOSSettingsKeyAutoPrompt : @NO}];
     
     [self configureStore];
     [[StoreManager sharedInstance] start];
@@ -50,10 +44,22 @@
     
     [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
     [VKSdk processOpenURL:url fromApplication:sourceApplication];
-    //or for ios9
-    //[VKSdk processOpenURL:url fromApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]];
     
     return YES;
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken{
+    const unsigned *tokenBytes = [deviceToken bytes];
+    NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
+                          ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
+                          ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
+                          ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+    
+    if(![DATA writeData:hexToken withName:@"apnsToken"]){
+        DDLogError(@"Error save token");
+    }
+    
+    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken - %@", hexToken);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

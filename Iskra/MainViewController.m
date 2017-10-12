@@ -1,23 +1,19 @@
 //
 //  MainViewController.m
-//  vchat
+//  Iskra
 //
 //  Created by Alexey Fedotov on 19/08/16.
 //  Copyright © 2016 Ancle Apps. All rights reserved.
 //
 
 #import <videoprp/AgoraVideoSourceObjc.h>
-//#import <videoprp/AgoraYuvEnhancerObjc.h>
-//#import <videoprp/AgoraYuvPreProcessorObjc.h>
 #import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
-//#import "AGVideoPreProcessing.h"
 
 #import "SVProgressHUD.h"
 #import <RESideMenu/RESideMenu.h>
 #import <SpriteKit/SpriteKit.h>
 #import "RegisterViewController.h"
 #import "IntroViewController.h"
-#import <OneSignal/OneSignal.h>
 #import <PopupDialog/PopupDialog-Swift.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -63,16 +59,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
     AgoraVideoSource *agoraSource;
 }
 
-/*
-@property (nonatomic, strong) TVIVideoClient *client;
-@property (nonatomic, strong) TVIRoom *room;
-@property (nonatomic, strong) TVILocalMedia *localMedia;
-@property (nonatomic, strong) TVICameraCapturer *camera;
-@property (nonatomic, strong) TVILocalVideoTrack *localVideoTrack;
-@property (nonatomic, strong) TVILocalAudioTrack *localAudioTrack;
-@property (nonatomic, strong) TVIParticipant *participant;
-*/
-
 @property (nonatomic) CameraDelegate *cameraDelegate;
 
 @property (strong, nonatomic) VideoEffect *videoEffect;
@@ -84,14 +70,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
 @property (strong, nonatomic) AgoraRtcEngineKit *agoraKit;
 @property (strong, nonatomic) AgoraRtcVideoCanvas *bigCanvas;
 @property (strong, nonatomic) AgoraRtcVideoCanvas *smallCanvas;
-
-//@property (strong, nonatomic) FaceDetectorCamera *cameraCapture;
-//@property (strong, nonatomic) MyCameraCapture *videoCapture;
-
-//QB
-//@property (strong, nonatomic) QBRTCSession *session;
-//@property (nonatomic, weak) QBRTCVideoCapture *capture;
-//@property (nonatomic, strong) QBRTCScreenCapture *screenCapture;
 
 @property (nonatomic) Chat *chat;
 @property (nonatomic) User *user;
@@ -114,7 +92,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
 
 //temp sockets status
 -(void)setStatus:(NSString *)status{
-    [JDStatusBarNotification showWithStatus:status dismissAfter:3];
+    //[JDStatusBarNotification showWithStatus:status dismissAfter:3];
 }
 
 - (void)dealloc
@@ -129,10 +107,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
     
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    //self.localMedia = [[TVILocalMedia alloc] init];
-    
-    //TODO: add reachability and force socket poll after changing
-    
     self.smallView.hidden = YES;
     self.timerView.hidden = YES;
     self.chatUpperBar.hidden = YES;
@@ -141,6 +115,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     self.connectingView.hidden = YES;
     self.effectsButton.enabled = NO;
     self.cameraButton.enabled = NO;
+    self.mainView.hidden = YES;
     
     self.isMeShowed = NO;
     
@@ -163,15 +138,15 @@ typedef NS_ENUM(NSInteger, TimerType) {
     self.masksArray = @[@(NoMask),
                         @(FirstMask),
                         @(SecondMask),
-                        @(ThirdMask)];
+                        @(ThirdMask),
+                        @(FourthMask),
+                        @(FifthMask)];
     
     self.maskEffect = [[MaskEffect alloc] initWithType:NoMask];
     self.videoEffect = [[VideoEffect alloc] initWithType:NoEffect];
     
     self.nowEffect = Filters;
-    
     self.nowDeviceID = 1;
-    
    
     [self addObserver:self forKeyPath:@"chatStatus" options:NSKeyValueObservingOptionNew context:nil];
     [API addObserver:self forKeyPath:@"apiStatus" options:NSKeyValueObservingOptionNew context:nil];
@@ -229,10 +204,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
     self.skView.hidden = YES;
     self.skView.userInteractionEnabled = NO;
     self.skView.allowsTransparency = YES;
-    //scene = [[SKScene alloc] initWithSize:CGSizeMake(self.skView.width, self.skView.height)];
-    //scene.backgroundColor = [SKColor clearColor];
-    //scene.userInteractionEnabled = NO;
-    //[self.skView presentScene: scene];
     
     //SOCKETS
     
@@ -259,7 +230,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
         if(self.chat.cid){
             DDLogDebug(@"self.chat.distance %@", self.chat.distance);
             self.chatDistanceLabel.text = self.chat.distance;
-            //self.chatUsernameLabel.text = [NSString stringWithFormat:@"%@", self.chat.name];
             self.chatUsernameLabel.text = [NSString stringWithFormat:@"%@, %@", self.chat.name, self.chat.age];
             [self startChatWithChatId:self.chat.cid];
         }else{
@@ -288,8 +258,13 @@ typedef NS_ENUM(NSInteger, TimerType) {
         [DataManager saveContacts:data];
     }];
     
+#pragma mark - Decision from Opponent
+    
     [API.socket on:@"approved" callback:^(NSArray* data, SocketAckEmitter* ack) {
         DDLogDebug(@"approved %@", data);
+        
+        
+        [self hideBigCamera];
         
         [self showSuccessPopup];
         [API callMethod:@"getContacts" withData:nil];
@@ -297,6 +272,8 @@ typedef NS_ENUM(NSInteger, TimerType) {
     
     [API.socket on:@"rejected" callback:^(NSArray* data, SocketAckEmitter* ack) {
         DDLogDebug(@"rejected %@", data);
+        
+        [self hideBigCamera];
         [self showFailPopup];
     }];
     
@@ -338,10 +315,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
 
     self.cameraImageView = self.bigCameraImageView;
     
-    //[socket reconnect];
-    //[[QBRTCClient instance] addDelegate:self];
-    //[QBRTCClient initializeRTC];
-    
     self.agoraKit = [AgoraRtcEngineKit sharedEngineWithAppId:@"04d32aab9f9542f19e768054ea117f6e" delegate:self];
     [self.agoraKit enableVideo];
     
@@ -371,8 +344,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
     }
     
     [API.socket connect];
-    
-    //[self setConfigWithData:nil]; //short path
 }
 
 - (void)applicationWillEnterForeground {
@@ -395,31 +366,12 @@ typedef NS_ENUM(NSInteger, TimerType) {
     
     [API callMethod:@"getStat" withData:nil];
     
-    //TODO: process data
-    
-    //NSLog(@"self.session.localMediaStream.videoTrack.isEnabled ----> %i", self.session.localMediaStream.videoTrack.isEnabled);
-    
     if (!self.isMeShowed) {
         [self checkCameraPermission];
     }else{
         //already connected after reconnct
         [self checkLogin];
     }
-    
-    /*
-    if (!self.client) {
-        //first time init
-        self.client = [TVIVideoClient clientWithToken:@"952b4de848c447eb74e67298a7463842"];
-        if (!self.client) {
-            DDLogInfo(@"Failed to create video client");
-            return;
-        }else{
-            [self checkCameraPermission];
-        }
-    }else{
-        //already connected after reconnct
-        [self checkLogin];
-    }*/
 }
 
 
@@ -450,16 +402,18 @@ typedef NS_ENUM(NSInteger, TimerType) {
 -(void)registerUser{
     self.chatStatus = ChatIniting;
     
-    DDLogInfo(@"----> %@ %@ %@ %@ %@ %@ %@", self.user.uid, self.user.name, self.user.male, self.user.bday, self.user.link, LOCATION.lon, LOCATION.lat);
-
-#if (TARGET_OS_SIMULATOR)
+    DDLogDebug(@"----> %@ %@ %@ %@ %@ %@ %@", self.user.uid, self.user.name, self.user.male, self.user.bday, self.user.link, LOCATION.lon, LOCATION.lat);
     
-   // self.lon = [NSNumber numberWithFloat:1.1];
-   // self.lat = [NSNumber numberWithFloat:1.1];
+    NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    DDLogDebug(@"UUID ----> %@", uuid);
     
-#endif
+    NSString *apnsToken = @"";
+    if([DATA readDataWithName:@"apnsToken"]){
+        apnsToken = [DATA readDataWithName:@"apnsToken"];
+        DDLogDebug(@"apnsToken ----> %@", apnsToken);
+    }
     
-    NSDictionary *userInfo = @{@"id":self.user.uid,@"name":self.user.name,@"male":self.user.male,@"year":self.user.bday,@"url":self.user.link,@"location":@{@"lon":LOCATION.lon,@"lat":LOCATION.lat}};
+    NSDictionary *userInfo = @{@"id":self.user.uid,@"name":self.user.name,@"male":self.user.male,@"year":self.user.bday,@"url":self.user.link,@"location":@{@"lon":LOCATION.lon,@"lat":LOCATION.lat},@"uuid":uuid,@"token":apnsToken};
     
     [API callMethod:@"register" withData:userInfo];
 }
@@ -470,79 +424,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     [API callMethod:@"getContacts" withData:nil];
     
     self.chatStatus = ChatStopped;
-    
-    //QB
-    //[self autorize];
 }
-
-/*
--(void)autorize{
-    //login to
-    
-    [QBRequest logInWithUserLogin:self.user.uid
-                         password:@"password"
-                     successBlock:^(QBResponse * _Nonnull response, QBUUser * _Nullable user)
-     {
-         //self.isAutorized = YES;
-         
-         [self loginWithUser:user];
-         
-     } errorBlock:^(QBResponse * _Nonnull response) {
-         
-         NSLog(@"Error ----> %@", response.error.error);
-         
-         if (response.status == QBResponseStatusCodeUnAuthorized) {
-             // Clean profile
-             //[self.profile clearProfile];
-             
-             //no user found
-             [self signUpToChat];
-         }
-     }];
-}
-
--(void)signUpToChat{
-    
-    QBUUser *newUser = [QBUUser user];
-    
-    newUser.login = self.user.uid;
-    newUser.fullName = self.user.name;
-    //newUser.tags = @[roomName].mutableCopy;
-    newUser.password = @"password";
-    
-    [QBRequest signUp:newUser successBlock:^(QBResponse * _Nonnull response, QBUUser * _Nullable user)
-     {
-         NSLog(@"signed up ----> %@ %@", user.fullName, user.password);
-         [self loginWithUser:user];
-         
-     } errorBlock:^(QBResponse * _Nonnull response) {
-         
-         NSLog(@"Error ----> %@", response.error.error);
-         //[self handleError:response.error.error domain:ErrorDomainSignUp];
-     }];
-}
-
--(void)loginWithUser:(QBUUser *)user{
-    user.password = @"password";
-    [[QBChat instance] connectWithUser:user completion:^(NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"Error ----> %@", error);
-            
-            if (error.code == 401) {
-            }
-            else {
-                NSLog(@"Error ----> %@", error);
-            }
-        }
-        else {
-            //self.currentChatUser
-            
-            NSLog(@"LOGGED IN");
-            self.chatStatus = ChatStopped;
-        }
-    }];
-}
-*/
 
 -(void)checkCameraPermission{
     AVAuthorizationStatus videoStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
@@ -574,9 +456,8 @@ typedef NS_ENUM(NSInteger, TimerType) {
 
 #define clamp(a) (a>255?255:(a<0?0:a))
 
-
+//not used
 - (UIImage *)imageFromSampleBuffer:(CVPixelBufferRef)imageBuffer {
-    //CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer,0);
     
     size_t width = CVPixelBufferGetWidth(imageBuffer);
@@ -649,32 +530,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
                                           (__bridge CFDictionaryRef)(pixelAttributes),
                                           &pixelBuffer);
     
-    /* green box
-    void *YUV[3] = {y, u, v};
-    size_t planeWidth[3] = {width, width/2, width/2};
-    size_t planeHeight[3] = {height, height/2, height/2};
-    size_t planeBytesPerRow[3] = {ystride, ustride, vstride};
-    
-    CVReturn result = CVPixelBufferCreateWithPlanarBytes(kCFAllocatorDefault,
-                                                         width,
-                                                         height,
-                                                         kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange,
-                                                         nil,
-                                                         width*height*1.5,
-                                                         3,
-                                                         YUV,
-                                                         planeWidth,
-                                                         planeHeight,
-                                                         planeBytesPerRow,
-                                                         nil,
-                                                         nil,
-                                                         (__bridge CFDictionaryRef)(pixelAttributes),
-                                                         &pixelBuffer);
-    
-    */
-    
-    //check this http://stackoverflow.com/questions/8838481/kcvpixelformattype-420ypcbcr8biplanarfullrange-frame-to-uiimage-conversion
-    
     
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);
     
@@ -682,10 +537,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
     uint8_t *yDestPlane = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
     memcpy(yDestPlane, y, width * height); //width * height
     
-    //NSLog(@"u %@", [NSString stringWithFormat:@"%s", u]);
-    //NSLog(@"v %@", [NSString stringWithFormat:@"%s", v]);
-    
-    //green after that
     
     //MAKE UV
     uint8_t *uvDestPlane = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
@@ -800,9 +651,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
 
 -(void)imageCaptured:(CIImage *)ciimage{
     
-    //CIImage *ciimage = [CIImage imageWithCGImage:image];
-    //CGImageRelease(image);
-    
     //add mask first
     if(self.maskEffect != nil){
         ciimage = [self.maskEffect getCIImageFrom:ciimage];
@@ -826,7 +674,6 @@ typedef NS_ENUM(NSInteger, TimerType) {
         orientation = UIImageOrientationRight;
     }
     UIImage *outImage = [UIImage imageWithCGImage:inImage scale:1.0 orientation:orientation];
-    //UIImage *outImage = [UIImage imageWithCGImage:inImage];
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
         self.cameraImageView.hidden = NO;
@@ -938,7 +785,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     return context;
 }
 
-
+//not used
 - (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)x andY:(int)y count:(int)count
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
@@ -992,93 +839,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     //AGORA
     [self.agoraKit setVideoProfile:AgoraRtc_VideoProfile_480P_9 swapWidthAndHeight: false];
     
-    //AgoraRtcVideoCanvas *bigCanvas = [[AgoraRtcVideoCanvas alloc] init];
-    //bigCanvas.uid = 0; // UID = 0 means we let Agora pick a UID for us
-    //bigCanvas.view = self.mainView;
-    //bigCanvas.renderMode = AgoraRtc_Render_Fit;
-    
-    //[self.agoraKit setupLocalVideo:bigCanvas];
-    //[self.agoraKit startPreview];
-    
-    //[AGVideoPreProcessing registerVideoPreprocessing:self.agoraKit];
-    
-    //YuvPreProcessor *preprocessor = [[YuvPreProcessor alloc] init];
-    //preprocessor.delegate = self;
-    //[preprocessor turnOn];
-    
-    
-    /*
-     //QB
-    NSArray *formats = [QBRTCCameraCapture formatsWithPosition:AVCaptureDevicePositionFront];
-    for (QBRTCVideoFormat *videoFormat in formats) {
-        NSLog(@"----> %@", [NSString stringWithFormat:@"%tux%tu", videoFormat.width, videoFormat.height]);
-    }
-    
-    [[QBRTCClient instance] addDelegate:self];
-    QBRTCVideoFormat *videoFormat = [QBRTCVideoFormat new];
-    videoFormat.frameRate = 30;
-    videoFormat.pixelFormat = QBRTCPixelFormat420f;
-    videoFormat.width = 960;
-    videoFormat.height = 540;
-    
-    self.cameraCapture = [[FaceDetectorCamera alloc] initWithVideoFormat:videoFormat position:AVCaptureDevicePositionFront];
-    
-    self.session.localMediaStream.videoTrack.videoCapture = self.cameraCapture;
-    
-    [self.cameraCapture startSession];
-    
-    //add output to mainView
-    //[self.mainView.layer insertSublayer:self.cameraCapture.previewLayer atIndex:0];
-    
-    //add output to smallView for test
-    self.smallView.hidden = NO;
-    self.cameraCapture.previewLayer.frame = self.smallView.bounds;
-    [self.smallView.layer insertSublayer:self.cameraCapture.previewLayer atIndex:0];
-    
-    self.cameraImageView.hidden = NO;
-    self.mainView.hidden = YES;
-    self.shotView.hidden = YES;
-    self.cameraCapture.outImageView = self.cameraImageView;
-    
-    //flip camera
-    self.cameraImageView.transform = CGAffineTransformMake(self.cameraImageView.transform.a * -1, 0, 0, 1, self.cameraImageView.transform.tx, 0);
-    
-     */
-     
-    /*
-    self.capture = self.session.localMediaStream.videoTrack.videoCapture;
-    self.screenCapture = [[QBRTCScreenCapture alloc] initWithView:self.view];
-    //Switch to sharing
-    self.session.localMediaStream.videoTrack.videoCapture = self.screenCapture;
-    //and back
-    //self.session.localMediaStream.videoTrack.videoCapture = self.capture;
-    */
-    
-    /* twilio
-    // Adding local video track to localMedia and starting local preview if it is not already started.
-    if (self.localMedia.videoTracks.count != 0) {
-        return; //already showed
-    }
-    
-    self.camera = [[TVICameraCapturer alloc] init];
-    //self.localVideoTrack = [self.localMedia addVideoTrack:YES capturer:self.camera];
-    
-    TVIVideoConstraints *cons = [TVIVideoConstraints constraintsWithBlock:^(TVIVideoConstraintsBuilder * _Nonnull builder) {
-        builder.aspectRatio = TVIAspectRatio16x9;
-    }];
-    
-    NSError *error = nil;
-    self.localVideoTrack = [self.localMedia addVideoTrack:YES capturer:self.camera constraints:cons error:&error];
-    
-    if (!self.localVideoTrack) {
-        DDLogInfo(@"Failed to add video track");
-    } else {
-        // Attach view to video track for local preview
-        [self.localVideoTrack attach:self.mainView];
-        
-        DDLogInfo(@"Video track added to localMedia");
-    }*/
-    
     self.effectsButton.enabled = YES;
     self.cameraButton.enabled = YES;
     
@@ -1104,11 +864,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
         if(granted){
             
-            //twilio Adding local audio track to localMedia
-            //if (!self.localAudioTrack) {
-            //    self.localAudioTrack = [self.localMedia addAudioTrack:YES];
-            //}
-            
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self checkRules];
             });
@@ -1128,7 +883,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     if(!rules){
         [self showRulesPopup];
     }else{
-        //easy way
+        //short way
         //[self startSearching];
         
         [self checkSubscription];
@@ -1181,8 +936,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
         DDLogInfo(@"new settings %@", settings);
     }
     
-    //DDLogInfo(@"lon %@ %@ %@ %@", self.lon, settings[@"men"], settings[@"minAge"], settings[@"maxAge"]);
-    
     NSDictionary *data = @{@"male":settings[@"men"], @"year_min":settings[@"minAge"], @"year_max":settings[@"maxAge"], @"location":@{@"lon":LOCATION.lon,@"lat":LOCATION.lat}};
     
     [API callMethod:@"search" withData:data];
@@ -1208,7 +961,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
         //decision waiting
         }else if(self.chatStatus == ChatDecisionWaiting){
             [self showSuccessPopup];
-            //[self showError:@"К сожалению собеседник не дал ответ.\nПопробуйте ещё раз."];
         }
         
         [self stopSearching];
@@ -1252,41 +1004,9 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
         [self.agoraKit setEnableSpeakerphone:YES];
         [UIApplication sharedApplication].idleTimerDisabled = YES; //do not sleep
     }];
-    
-    
-    /*
-    
-    NSNumber *oppId = [NSNumber numberWithInt:[chatId intValue]];
-    
-    NSArray *opponentsIDs = @[oppId];
-    QBRTCSession *newSession = [[QBRTCClient instance] createNewSessionWithOpponents:opponentsIDs withConferenceType:QBRTCConferenceTypeVideo];
-    //userInfo - the custom user information dictionary for the call. May be nil.
-    NSDictionary *userInfo = @{ @"key" : @"value" };
-    [newSession startCall:userInfo];
-    */
-    
-    /*
-    //join to room
-    TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithBlock:^(TVIConnectOptionsBuilder * _Nonnull builder) {
-        builder.name = chatId;
-        builder.localMedia = self.localMedia;
-    }];
-    
-    TVIRoom *room = [self.client connectWithOptions:connectOptions delegate:self];
-*/
 }
 
 -(void)chatStoppedBy:(NSUInteger)uid{
-    /*
-    //get a shot
-    UIImage *shot = [self capturedView:self.view withBounds:self.view.bounds andScale:1];
-    if(shot != nil){
-        [self.shotView setImage:shot];
-        self.shotView.hidden = NO;
-    }else{
-        NSLog(@"jopa");
-    }
-   */
     
     [self stopChat];
     if([mainTimer getTimeRemaining] < 10){
@@ -1305,20 +1025,21 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     [self.agoraKit leaveChannel:^(AgoraRtcStats *stat) {
         [UIApplication sharedApplication].idleTimerDisabled = NO;
         
-        /*
-        AgoraRtcVideoCanvas *bigCanvas = [[AgoraRtcVideoCanvas alloc] init];
-        bigCanvas.uid = 0; // UID = 0 means we let Agora pick a UID for us
-        bigCanvas.view = self.mainView;
-        bigCanvas.renderMode = AgoraRtc_Render_Fit;
-        [self.agoraKit setupLocalVideo:bigCanvas];
-        */
-        
         self.smallCameraImageView.image = nil;
+        
+        self.bigCameraImageView.image = nil;
         self.cameraImageView = self.bigCameraImageView;
+        
+        self.bigCameraImageView.hidden = NO;
         
         self.smallView.hidden = YES;
         self.connectingView.hidden = YES;
     }];
+}
+
+//hide snapshot with big video
+-(void)hideBigCamera{
+    self.mainView.hidden = YES;
 }
 
 #pragma mark Chat Started
@@ -1327,14 +1048,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     self.chatStatus = ChatStarted;
     
     //me
-    
-    /*
-    AgoraRtcVideoCanvas *smallCanvas = [[AgoraRtcVideoCanvas alloc] init];
-    smallCanvas.uid = 0;
-    smallCanvas.view = self.smallView;
-    smallCanvas.renderMode = AgoraRtc_Render_Fit;
-    [self.agoraKit setupLocalVideo:smallCanvas];
-    */
     
     self.bigCameraImageView.image = nil;
     self.cameraImageView = self.smallCameraImageView;
@@ -1345,28 +1058,11 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     bigCanvas.view = self.mainView;
     bigCanvas.renderMode = AgoraRtc_Render_Fit;
     [self.agoraKit setupRemoteVideo:bigCanvas];
-
+    
+    self.bigCameraImageView.hidden = YES;
+    self.mainView.hidden = NO;
     self.smallView.hidden = NO;
     self.connectingView.hidden = YES;
-    
-    //me
-    
-    //he
-    // Grab the participant's media and register our listener
-    //TVIMedia *media = participant.media;
-    //media.setListener(mediaListener);
-    
-    // Render the first video track
-    //TVIVideoTrack *videoTrack = media.videoTracks[0];
-    //[videoTrack addRenderer:self.mainView];
-    
-    /////participant.delegate = self;
-    //[videoTrack attach:self.mainView];
-    
-    // To stop rendering simply remove the renderer from the video track
-    //[videoTrack removeRenderer:self.mainView];
-    
-    
 }
 
 
@@ -1379,8 +1075,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 
 - (void)rtcEngineConnectionDidLost:(AgoraRtcEngineKit *)engine{
     NSLog(@"AGORA: rtcEngineConnectionDidLost");
-    
-    //TODO: remove all here
 }
 
 
@@ -1418,112 +1112,11 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     [self chatStoppedBy:uid];
 }
 
-/*
-#pragma mark -
-#pragma mark QBRTCClientDelegate
-
-- (void)session:(QBRTCSession *)session startedConnectingToUser:(NSNumber *)userID {
-    
-    NSLog(@"Started connecting to user %@", userID);
-}
-
-- (void)session:(QBRTCSession *)session connectionClosedForUser:(NSNumber *)userID {
-    
-    NSLog(@"Connection is closed for user %@", userID);
-}
-
-- (void)session:(QBRTCSession *)session connectedToUser:(NSNumber *)userID {
-    
-    NSLog(@"Connection is established with user %@", userID);
-}
-
-- (void)session:(QBRTCSession *)session disconnectedFromUser:(NSNumber *)userID {
-    NSLog(@"Disconnected from user %@", userID);
-}
-
-- (void)session:(QBRTCSession *)session userDidNotRespond:(NSNumber *)userID {
-    NSLog(@"User %@ did not respond to your call within timeout", userID);
-}
-
-- (void)session:(QBRTCSession *)session connectionFailedForUser:(NSNumber *)userID {
-    NSLog(@"Connection has failed with user %@", userID);
-}
-
-
-- (void)session:(QBRTCSession *)session initializedLocalMediaStream:(QBRTCMediaStream *)mediaStream{
-    NSLog(@"QBRTCSession initializedLocalMediaStream");
-}
-
-- (void)session:(QBRTCSession *)session updatedStatsReport:(QBRTCStatsReport *)report forUserID:(NSNumber *)userID {
-    
-    NSString *result = [report statsString];
-    NSLog(@"%@", result);
-}
-
--(void)session:(QBRTCSession *)session didChangeState:(QBRTCSessionState)state{
-    NSLog(@"QBRTCSession didChangeState----> %lu", (unsigned long)state);
-}
-
-- (void)session:(QBRTCSession *)session didChangeConnectionState:(QBRTCConnectionState)state forUser:(NSNumber *)userID {
-    NSLog(@"Session did change state to %tu for userID %@", state, userID);
-}
-
-- (void)didReceiveNewSession:(QBRTCSession *)session userInfo:(NSDictionary *)userInfo {
-    
-    NSLog(@"didReceiveNewSession----> %@", session);
-    
-    if (self.session) {
-        // we already have a video/audio call session, so we reject another one
-        // userInfo - the custom user information dictionary for the call from caller. May be nil.
-        NSDictionary *userInfo = @{ @"key" : @"value" };
-        [session rejectCall:userInfo];
-        return;
-    }
-    self.session = session;
-}
-
-- (void)session:(QBRTCSession *)session receivedRemoteVideoTrack:(QBRTCVideoTrack *)videoTrack fromUser:(NSNumber *)userID {
-    
-    NSLog(@"receivedRemoteVideoTrack----> %@", session);
-    
-    // we suppose you have created UIView and set it's class to QBRTCRemoteVideoView class
-    // also we suggest you to set view mode to UIViewContentModeScaleAspectFit or
-    // UIViewContentModeScaleAspectFill
-    //[self.opponentVideoView setVideoTrack:videoTrack];
-}
-*/
-
-/*
-#pragma mark - TVIParticipantDelegate
-
-- (void)participant:(nonnull TVIParticipant *)participant addedVideoTrack:(nonnull TVIVideoTrack *)videoTrack {
-    // Attach remoteView on video track to render video
-    [videoTrack attach:self.mainView];
-}
-
-- (void)participant:(nonnull TVIParticipant *)participant removedVideoTrack:(nonnull TVIVideoTrack *)videoTrack {
-    // To stop rendering simply call detach
-    [videoTrack detach:self.mainView];
-}
-- (void)participant:(nonnull TVIParticipant *)participant addedAudioTrack:(nonnull TVIAudioTrack *)audioTrack {
-    // A Participant added an Audio Track
-}
-
-- (void)participant:(nonnull TVIParticipant *)participant removedAudioTrack:(nonnull TVIAudioTrack *)audioTrack {
-    // A Participant removed an Audio Track
-}
-
-- (void)participant:(nonnull TVIParticipant *)participant enabledTrack:(nonnull TVITrack *)track {
-    // A Participant enabled a Track
-}
-
-- (void)participant:(nonnull TVIParticipant *)participant disabledTrack:(nonnull TVITrack *)track {
-    // A Participante disabled a Track
-}*/
-
-
+#pragma mark - Chat Decision
 
 -(void)sendChatSuccess{
+    
+    
     self.chatStatus = ChatDecisionWaiting;
     [self startCounterFor:TimerDecision];
     
@@ -1531,55 +1124,23 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 }
 
 -(void)sendChatRejectWithReason:(int)reason{
+    [self hideBigCamera];
+    
     NSNumber *reasonNumber = [NSNumber numberWithInt:reason];
     NSDictionary *userInfo = @{@"reason":reasonNumber,@"message":@""};
 
     [API callMethod:@"reject" withData:userInfo];
 }
 
-/*
-#pragma mark - TVIRoomDelegate
-
-- (void)didConnectedToRoom:(nonnull TVIRoom *)room {
-    // The Local Participant
-    TVILocalParticipant *localParticipant = room.localParticipant;
-    NSLog(@"Local Participant %@", localParticipant.identity);
-    
-    // Connected participants
-    NSArray *participants = room.participants;
-    NSLog(@"Number of connected participants %ld", [participants count]);
-}
-
-- (void)room:(nonnull TVIRoom *)room participantDidConnect:(nonnull TVIParticipant *)participant {
-    NSLog(@"Participant %@ has joined Room %@", participant.identity, room.name);
-    
-    [self chatStartedWith:participant];
-}
-
-- (void)room:(nonnull TVIRoom *)room participantDidDisconnect:(nonnull TVIParticipant *)participant {
-    NSLog(@"Participant %@ has left Room %@", participant.identity, room.name);
-    
-    [self chatStoppedBy:participant];
-}
-*/
-
  
 #pragma mark - BUTTONS
 
 - (IBAction)menuTapped:(id)sender {
     [self.sideMenuViewController presentLeftMenuViewController];
-    
-    
-   // [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"leftMenuViewController"]] animated:YES];
-    //[self performSegueWithIdentifier:@"ShowMenu" sender:self];
 }
 
 - (IBAction)filterTapped:(id)sender {
-    
     [self.sideMenuViewController presentRightMenuViewController];
-    
-    //[self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"rightMenuViewController"]] animated:YES];
-     //[self performSegueWithIdentifier:@"ShowFilters" sender:self];
 }
 
 - (IBAction)effectsTapped:(id)sender {
@@ -1611,31 +1172,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 }
 
 - (IBAction)cameraTapped:(id)sender {
-    
-    //flip camera
-    //[self.agoraKit switchCamera];
     [self.cameraDelegate switchCamera];
-    /*
-    AVCaptureDevicePosition position = self.cameraCapture.currentPosition;
-    AVCaptureDevicePosition newPosition = position == AVCaptureDevicePositionBack ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;
-    
-    // check whether videoCapture has or has not camera position
-    // for example, some iPods do not have front camera
-    if ([self.cameraCapture hasCameraForPosition:newPosition]) {
-        [self.cameraCapture selectCameraPosition:newPosition];
-        
-        self.cameraImageView.transform = CGAffineTransformMake(self.cameraImageView.transform.a * -1, 0, 0, 1, self.cameraImageView.transform.tx, 0);
-    }
-    */
-    
-    
-    
-    /*
-    if (self.camera.source == TVIVideoCaptureSourceFrontCamera) {
-        [self.camera selectSource:TVIVideoCaptureSourceBackCameraWide];
-    } else {
-        [self.camera selectSource:TVIVideoCaptureSourceFrontCamera];
-    }*/
 }
 
 - (IBAction)filtersTapped:(id)sender {
@@ -1739,7 +1276,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
             [API callMethod:@"getStat" withData:nil];
             break;
         case ChatStopped:
-            title = NSLocalizedString(@"searchButtonLabel", nil);
+            title = NSLocalizedString(@"searchButtonLabel", nil); //Искать
             self.chatUpperBar.hidden = YES;
             self.mainUpperBar.hidden = NO;
             [chatTimer pause];
@@ -1786,10 +1323,13 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     if(self.nowEffect == Filters){
         image = [UIImage imageNamed:@"ic_filter"];
     }else{
-        image = [UIImage imageNamed:@"ic_mask"];
+        image = [UIImage imageNamed:[NSString stringWithFormat:@"masks_%li", (long)indexPath.row]];
     }
     
-    [cell.contentView addSubview:[[UIImageView alloc] initWithImage:image]];
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:cell.contentView.bounds];
+    iv.image = image;
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [cell.contentView addSubview:iv];
     return cell;
 }
 
@@ -1827,18 +1367,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 #pragma mark ADD EFFECT
 
 -(void)addEffect:(EffectType)eid{
-    
-   // EffectType eff = eid;//((NSInteger*)eid).intValue;
-    //[self.cameraCapture setEffect:[[VideoEffect alloc] initWithType:eff]];
     self.videoEffect = [[VideoEffect alloc] initWithType:eid];
-    /*
-    NSArray* arrVideoEffectList = [self.sdk.AVChat.VideoController getEffectsList];
-    id <ooVooEffect> effect = arrVideoEffectList[eid];
-    DDLogDebug(@"----> %@", effect.effectID);
-    [self.sdk.AVChat.VideoController setConfig:effect.effectID forKey:ooVooVideoControllerConfigKeyEffectId];
-     */
-    
-    //[self setStatus:@"sdfsd"];
 }
 
 #pragma mark - POPUPS
@@ -1869,15 +1398,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 }
 
 -(void)showSuccessPopup{
-    /*
-    NSString *burstPath = [[NSBundle mainBundle] pathForResource:@"WinEffect" ofType:@"sks"];
-    effectEmitter = [NSKeyedUnarchiver unarchiveObjectWithFile:burstPath];
-    effectEmitter.userInteractionEnabled = false;
-    CGPoint point = CGPointMake(self.skView.width/2, self.skView.height/2); //cose it's reversed
-    effectEmitter.position = point;
-    [scene addChild:effectEmitter];
-    _skView.hidden = NO;
-    */
     [self stopSearching];
     
     self.bottomBarView.hidden = YES;
@@ -1891,13 +1411,11 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     
     DefaultButton *b = [[DefaultButton alloc] initWithTitle:NSLocalizedString(@"continueButtonLabel", nil) height:kPopupButtonHeight dismissOnTap:YES action:^{
         self.bottomBarView.hidden = NO;
-        //self.skView.paused = YES;
     }];
     
     CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"Открыть социальный профиль" height:kPopupButtonHeight dismissOnTap:YES action:^{
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.chat.url]];
         self.bottomBarView.hidden = NO;
-        //self.skView.paused = YES;
     }];
     
     [popup addButtons: @[b, cancel]];
@@ -1906,7 +1424,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 }
 
 -(void)showBuyPopup{
-    NSString *message = @"Сейчас вы будете перенаправлены на подключение подписки с бесплатным периодом.\n    Это значит, что, оформив подписку, вы получите бесплатный доступ на 1 неделю, а только потом с вашего счёта будут списаны деньги за следующую неделю. В любой момент в течение 7 дней подписку можно отключить, чтобы не платить вообще ничего.\nСтоимость составляет 3 доллара — цена чашки кофе в кафе.";
+    NSString *message = @"Сейчас вы будете перенаправлены на подключение подписки с бесплатным периодом.\n\nЭто значит, что, оформив подписку, вы получите бесплатный доступ на 1 неделю, а только потом с вашего счёта будут списаны деньги за следующую неделю. В любой момент в течение 7 дней подписку можно отключить, чтобы не платить вообще ничего.\n\nСтоимость составляет 3 доллара — цена чашки кофе в кафе.";
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"Подписка"
                                                     message:message
                                                       image:nil
@@ -1930,7 +1448,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 }
 
 -(void)buySubscription{
-    [[StoreManager sharedInstance] buy:1 withBlock:^(SKPaymentTransaction *data, NSError *error) {
+    [[StoreManager sharedInstance] buy:0 withBlock:^(SKPaymentTransaction *data, NSError *error) {
         if(!error){
             //force cheking
             [[StoreManager sharedInstance] checkSubscription];
@@ -1940,7 +1458,8 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
             });
             
         }else{
-            [self showError:error.description];
+            //cancel make it also
+            [self showError:@"Ошибка покупки подписки, попробуйте ещё раз."];
         }
     }];
 }
@@ -2065,11 +1584,8 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
 
 - (UIImage *)capturedView:(UIView *)shotView withBounds:(CGRect)bounds andScale:(int)upScale
 {
-    //CAN PRODUCE NIL
     
     if(shotView == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"ShotView is nil"];
         return nil;
     }
     
@@ -2077,9 +1593,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     float effectiveScale = 1 / upScale; //2 times bigger then actual frame size
     
     CGSize captureSize = CGSizeMake(shotView.bounds.size.width / effectiveScale, shotView.bounds.size.height / effectiveScale);
-    
-    //NSLog(@"effectiveScale = %0.2f, captureSize = %@", effectiveScale, NSStringFromCGSize(captureSize));
-    //NSLog(@"BIGSCALE %f", [UIScreen mainScreen].scale);
     
     //create snapshop from shotView
     UIGraphicsBeginImageContextWithOptions(captureSize, NO, 0.0);
@@ -2091,8 +1604,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     CALayer *shotLayer = shotView.layer;
     
     if(shotLayer == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"ShotLayer is nil"];
         return nil;
     }
     
@@ -2101,35 +1612,26 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     UIGraphicsEndImageContext();
     
     if(img == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"Img is nil"];
         return nil;
     }
     
     //crop
     CGRect cropRect = CGRectMake(0, 0, bounds.size.width*upScale, bounds.size.height*upScale);
     
-    //NSLog(@"crop rect = %@", NSStringFromCGRect(cropRect));
     CGImageRef imageUncroppedRef = [img CGImage];
     
     if(imageUncroppedRef == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"ImageUncroppedRef is nil"];
         return nil;
     }
     
     CGImageRef imageRef = CGImageCreateWithImageInRect(imageUncroppedRef, cropRect);
     if(imageRef == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"ImageRef is nil"];
         return nil;
     }
     UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     
     if(croppedImage == nil){
-        //report
-        //[self sendErrorWithName:@"Capture error" andData:@"CroppedImage is nil"];
         return nil;
     }
     
