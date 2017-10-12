@@ -209,7 +209,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     
 #pragma FIRST USERINFO
     [API.socket on:@"config" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"socket config got %@", data);
+        NSLog(@"socket config got %@", data);
         [self setConfigWithData:data];
     }];
     
@@ -228,7 +228,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
         [self.chat createWithData:data[0]];
         
         if(self.chat.cid){
-            DDLogDebug(@"self.chat.distance %@", self.chat.distance);
+            NSLog(@"self.chat.distance %@", self.chat.distance);
             self.chatDistanceLabel.text = self.chat.distance;
             self.chatUsernameLabel.text = [NSString stringWithFormat:@"%@, %@", self.chat.name, self.chat.age];
             [self startChatWithChatId:self.chat.cid];
@@ -239,12 +239,12 @@ typedef NS_ENUM(NSInteger, TimerType) {
     }];
     
     [API.socket on:@"searchstop_ok" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"socket searchStop_ok %@", data);
+        NSLog(@"socket searchStop_ok %@", data);
         [self stopSearching];
     }];
     
     [API.socket on:@"stat" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"socket stat %@", data);
+        NSLog(@"socket stat %@", data);
         
         NSString *activeCount = [data[0] objectForKey:@"activeCount"];
         int activeCountNum = [activeCount intValue];
@@ -253,7 +253,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     }];
     
     [API.socket on:@"contacts" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"contacts %@", data);
+        NSLog(@"contacts %@", data);
         
         [DataManager saveContacts:data];
     }];
@@ -261,7 +261,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
 #pragma mark - Decision from Opponent
     
     [API.socket on:@"approved" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"approved %@", data);
+        NSLog(@"approved %@", data);
         
         
         [self hideBigCamera];
@@ -271,7 +271,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     }];
     
     [API.socket on:@"rejected" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        DDLogDebug(@"rejected %@", data);
+        NSLog(@"rejected %@", data);
         
         [self hideBigCamera];
         [self showFailPopup];
@@ -279,6 +279,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     
     [API.socket onAny:^(SocketAnyEvent *event) {
         NSLog(@"ANY EVENT----> %@ %i", event.event, (int)event.items.count);
+        
     }];
     
 #pragma mark - Notifications
@@ -343,7 +344,10 @@ typedef NS_ENUM(NSInteger, TimerType) {
         }
     }
     
-    [API.socket connect];
+    //sockets OFF
+    //[API.socket connect];
+    
+    [self checkCameraPermission];
 }
 
 - (void)applicationWillEnterForeground {
@@ -402,15 +406,15 @@ typedef NS_ENUM(NSInteger, TimerType) {
 -(void)registerUser{
     self.chatStatus = ChatIniting;
     
-    DDLogDebug(@"----> %@ %@ %@ %@ %@ %@ %@", self.user.uid, self.user.name, self.user.male, self.user.bday, self.user.link, LOCATION.lon, LOCATION.lat);
+    NSLog(@"----> %@ %@ %@ %@ %@ %@ %@", self.user.uid, self.user.name, self.user.male, self.user.bday, self.user.link, LOCATION.lon, LOCATION.lat);
     
     NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    DDLogDebug(@"UUID ----> %@", uuid);
+    NSLog(@"UUID ----> %@", uuid);
     
     NSString *apnsToken = @"";
     if([DATA readDataWithName:@"apnsToken"]){
         apnsToken = [DATA readDataWithName:@"apnsToken"];
-        DDLogDebug(@"apnsToken ----> %@", apnsToken);
+        NSLog(@"apnsToken ----> %@", apnsToken);
     }
     
     NSDictionary *userInfo = @{@"id":self.user.uid,@"name":self.user.name,@"male":self.user.male,@"year":self.user.bday,@"url":self.user.link,@"location":@{@"lon":LOCATION.lon,@"lat":LOCATION.lat},@"uuid":uuid,@"token":apnsToken};
@@ -454,60 +458,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     }];
 }
 
-#define clamp(a) (a>255?255:(a<0?0:a))
-
-//not used
-- (UIImage *)imageFromSampleBuffer:(CVPixelBufferRef)imageBuffer {
-    CVPixelBufferLockBaseAddress(imageBuffer,0);
-    
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
-    uint8_t *yBuffer = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
-    size_t yPitch = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, 0);
-    uint8_t *cbCrBuffer = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 1);
-    size_t cbCrPitch = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, 1);
-    
-    int bytesPerPixel = 4;
-    uint8_t *rgbBuffer = malloc(width * height * bytesPerPixel);
-    
-    for(int y = 0; y < height; y++) {
-        uint8_t *rgbBufferLine = &rgbBuffer[y * width * bytesPerPixel];
-        uint8_t *yBufferLine = &yBuffer[y * yPitch];
-        uint8_t *cbCrBufferLine = &cbCrBuffer[(y >> 1) * cbCrPitch];
-        
-        for(int x = 0; x < width; x++) {
-            int16_t y = yBufferLine[x];
-            int16_t cb = cbCrBufferLine[x & ~1] - 128;
-            int16_t cr = cbCrBufferLine[x | 1] - 128;
-            
-            uint8_t *rgbOutput = &rgbBufferLine[x*bytesPerPixel];
-            
-            int16_t r = (int16_t)roundf( y + cr *  1.4 );
-            int16_t g = (int16_t)roundf( y + cb * -0.343 + cr * -0.711 );
-            int16_t b = (int16_t)roundf( y + cb *  1.765);
-            
-            rgbOutput[0] = 0xff;
-            rgbOutput[1] = clamp(b);
-            rgbOutput[2] = clamp(g);
-            rgbOutput[3] = clamp(r);
-        }
-    }
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(rgbBuffer, width, height, 8, width * bytesPerPixel, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
-    CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-    UIImage *image = [UIImage imageWithCGImage:quartzImage];
-    
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpace);
-    CGImageRelease(quartzImage);
-    free(rgbBuffer);
-    
-    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-    
-    return image;
-}
-
+/*
 //post (it works but needs reverse decode)
 -(void)onFrameAvailable:(unsigned char *)y ubuf:(unsigned char *)u vbuf:(unsigned char *)v ystride:(int)ystride ustride:(int)ustride vstride:(int)vstride width:(int)width height:(int)height{
     
@@ -570,49 +521,11 @@ typedef NS_ENUM(NSInteger, TimerType) {
             uv[vIndex] = v[uvDataIndex];
         }
     }
-    NSLog(@"1 uvDestPlane %@", [NSString stringWithFormat:@"%s", uvDestPlane]);
-    NSLog(@"uv %@", [NSString stringWithFormat:@"%s", uv]);
     
     memcpy(uvDestPlane, uv, width * height/2);
     
-    NSLog(@"2 uvDestPlane %@", [NSString stringWithFormat:@"%s", uvDestPlane]);
-    
-    
-    if(result == kCVReturnSuccess && pixelBuffer != NULL) {
-        
-        
-        /*
-        CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-        size_t r = CVPixelBufferGetBytesPerRow(pixelBuffer);
-        size_t bytesPerPixel = r/width;
-        
-        unsigned char *buffer = CVPixelBufferGetBaseAddress(pixelBuffer);
-        
-        UIGraphicsBeginImageContext(CGSizeMake(width, height));
-        
-        CGContextRef c = UIGraphicsGetCurrentContext();
-        
-        unsigned char* data = CGBitmapContextGetData(c);
-        if (data != NULL) {
-            size_t maxY = height;
-            for(int y = 0; y<maxY; y++) {
-                for(int x = 0; x<width; x++) {
-                    size_t offset = bytesPerPixel*((width*y)+x);
-                    data[offset] = buffer[offset];     // R
-                    data[offset+1] = buffer[offset+1]; // G
-                    data[offset+2] = buffer[offset+2]; // B
-                    data[offset+3] = buffer[offset+3]; // A
-                }
-            }
-        } 
-        img = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
-         */
-    }
     
     if (result != kCVReturnSuccess) {
-        DDLogWarn(@"Unable to create cvpixelbuffer %d", result);
         NSLog(@"Unable to create cvpixelbuffer %d", result);
     }
     
@@ -646,7 +559,7 @@ typedef NS_ENUM(NSInteger, TimerType) {
     CGImageRelease(videoImage);
     CVPixelBufferRelease(pixelBuffer);
 }
-
+*/
 # pragma mark - IMAGE CAPTURED
 
 -(void)imageCaptured:(CIImage *)ciimage{
@@ -784,48 +697,6 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     
     return context;
 }
-
-//not used
-- (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)x andY:(int)y count:(int)count
-{
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
-    
-    // First get the image into your data buffer
-    CGImageRef imageRef = [image CGImage];
-    NSUInteger width = CGImageGetWidth(imageRef);
-    NSUInteger height = CGImageGetHeight(imageRef);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    unsigned char *rawData = (unsigned char*) calloc(height * width * 4, sizeof(unsigned char));
-    NSUInteger bytesPerPixel = 4;
-    NSUInteger bytesPerRow = bytesPerPixel * width;
-    NSUInteger bitsPerComponent = 8;
-    CGContextRef context = CGBitmapContextCreate(rawData, width, height,
-                                                 bitsPerComponent, bytesPerRow, colorSpace,
-                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    CGColorSpaceRelease(colorSpace);
-    
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
-    CGContextRelease(context);
-    
-    // Now your rawData contains the image data in the RGBA8888 pixel format.
-    NSUInteger byteIndex = (bytesPerRow * y) + x * bytesPerPixel;
-    for (int i = 0 ; i < count ; ++i)
-    {
-        CGFloat alpha = ((CGFloat) rawData[byteIndex + 3] ) / 255.0f;
-        CGFloat red   = ((CGFloat) rawData[byteIndex]     ) / alpha;
-        CGFloat green = ((CGFloat) rawData[byteIndex + 1] ) / alpha;
-        CGFloat blue  = ((CGFloat) rawData[byteIndex + 2] ) / alpha;
-        byteIndex += bytesPerPixel;
-        
-        UIColor *acolor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-        [result addObject:acolor];
-    }
-    
-    free(rawData);
-    
-    return result;
-}
-
 
 //after check permissions
 -(void)showMe{
@@ -1227,12 +1098,13 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
     switch (value) {
         case ApiConnected:
             _startButton.alpha = 1;
-            _startButton.enabled = true;
+            _startButton.enabled = YES;
             [self setStatus:@"Connected"];
             break;
         case ApiDisconnected:
-            _startButton.alpha = 0.5;
-            _startButton.enabled = false;
+            //sockets OFF
+            //_startButton.alpha = 0.5;
+            //_startButton.enabled = NO;
             self.onlineLabel.text = @"Connection Error";
             [self setStatus:@"Disconnected"];
             break;
@@ -1240,8 +1112,9 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
             [self setStatus:@"Reconnect"];
             break;
         case ApiError:
-            _startButton.alpha = 0.5;
-            _startButton.enabled = false;
+            //sockets OFF
+            //_startButton.alpha = 0.5;
+            //_startButton.enabled = NO;
             self.onlineLabel.text = @"Connection Error";
             
             [self setStatus:@"Error"];
